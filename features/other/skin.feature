@@ -52,7 +52,6 @@ Feature: creating and editing skins
   Scenario: A user should be able to select one of their own non-public skins to use in their My Skins page
   Given I am logged in as "skinner"
     And I create the skin "my blinking skin" with css "#title { text-decoration: blink;}"
-  When I follow "My Skins"
   Then I should see "my blinking skin"
     And I should find "Use"
   When I press "Use"
@@ -77,7 +76,7 @@ Feature: creating and editing skins
   Scenario: The user who creates a skin should be able to edit it
   Given I am logged in as "skinner"
     And I create the skin "my skin"
-    And I follow "My Skins"
+    #And I follow "Site Skins"
   When I follow "Edit"
     And I fill in "CSS" with "#greeting { text-decoration: blink;}"
     And I submit
@@ -89,7 +88,7 @@ Feature: creating and editing skins
     And the unapproved public skin "public skin"
   When I am on the skins page
     Then I should not see "public skin"
-  When I follow "My Skins"
+  When I follow "Site Skins"
   Then I should see "public skin"
     And I should see "(Not yet reviewed)"
     And I should not see "(Approved)"
@@ -154,8 +153,11 @@ Feature: creating and editing skins
     And I am logged in as "skinner"
     And I go to "public skin" edit skin page
   Then I should see "Sorry, you don't have permission"
-  When I follow "My Skins"
-  Then I should see "(Approved)"
+  When I am on the skins page
+    Then I should see "public skin"
+  When I follow "Site Skins"
+  Then I should see "public skin"
+    And I should see "(Approved)"
     And I should not see "Edit"
 
   Scenario: Users should be able to use public approved skins created by others
@@ -186,7 +188,7 @@ Feature: creating and editing skins
   When I am on skin's new page
   Then I should see "CSS" within "form"
   When I follow "Use Wizard Instead?"
-  Then I should see "Archive Skin Wizard"
+  Then I should see "Create New Archive Site Skin"
     And I should not see "CSS" within "form"
   When I follow "Write Custom CSS Instead?"
   Then I should see "CSS" within "form"
@@ -200,7 +202,7 @@ Feature: creating and editing skins
   When I fill in "skin_margin" with "5"
     And I submit
   Then I should see "Skin was successfully created"
-    And I should see "Margin5"
+    And I should see "Margin:5"
   When I follow "Edit"
     And I follow "Use Wizard Instead?"
     And I fill in "skin_margin" with "4.5"
