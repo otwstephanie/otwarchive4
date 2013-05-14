@@ -5,14 +5,17 @@
     <li><%= link_to ts("Revert to Default Skin"), unset_skins_path %></li>
   <% end %>
 	<% if logged_in? %>
-	  <% if (current_user.preference.skin_id != Skin.default.id) && session[:site_skin].blank? %>
 	    <li>
-    	  <%= form_for(current_user.preference, :url => {:controller => :preferences, :action => :update, :user_id => current_user}, :method => "put") do |f| %>
-          <%= f.hidden_field :skin_id, :value => Skin.default.id %>
-          <%= f.submit ts("Revert to Default Skin") %>
+        <% if (current_user.preference.skin_id != Skin.default.id) && session[:site_skin].blank? %>
+          <%= form_for(current_user.preference, :url => {:controller => :preferences, :action => :update, :user_id => current_user}, :method => "put") do |f| %>
+            <%= f.hidden_field :skin_id, :value => Skin.default.id %>
+            <%= f.submit ts("Revert to Default Skin") %>
+          <% end %>
+        <% else %>
+          <%= span_if_current( ts("Using Default Skin"), skins_path, true ) %>
         <% end %>
       </li>
-    <% end %>
+
 	
     <% unless controller.action_name == "new" %>
       <li><%= link_to ts("Create Skin"), new_skin_path %></li>

@@ -95,6 +95,8 @@ module NavigationHelpers
       skins_path(:work_skins => true)
     when /^(.*)'s skin page/
       skins_path(:user_id => $1)
+    when /^(.*)'s skins page/
+      skins_path(:user_id => $1)
     when /^"(.*)" skin page/
       skin_path(Skin.find_by_title($1))
     when /^"(.*)" edit skin page/
