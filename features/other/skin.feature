@@ -337,3 +337,48 @@ Feature: creating and editing skins
       And I submit
     Then I should see errors
       And "Site Skin" should be selected within "skin_type"
+
+  Scenario: View toggle buttons on skins (Issue 3197)
+  Given basic skins
+    And I am logged in as "skinner"
+    When I am on skinner's preferences page
+    When I follow "Skins"
+  Then I should see "My Site Skins"
+    And I should see "My Site Skins"
+    And I should see "My Work Skins"
+    And I should see "Public Site Skins"
+    And I should see "Public Work Skins"
+
+  Scenario: Toggle between user's work skins and site skins
+  Given basic skins
+    And I am logged in as "skinner"
+    And I am on skinner's skins page
+    And I follow "My Work Skins"
+  Then I should see "My Work Skins"
+    When I follow "My Site Skins"
+  Then I should see "My Site Skins"
+
+  Scenario: Toggle between public site skins and public work skins
+  Given I am logged in as "skinner"
+    And I am on skinner's skins page
+    And I follow "Public Work Skins"
+  Then I should see "Public Work Skins"
+    When I follow "Public Site Skins"
+  Then I should see "Public Skins"
+
+  Scenario: Reverting to default skin when a custom skin is selected
+  Given the approved public skin "public skin" with css "#title { text-decoration: blink;}"
+    And I am logged in as "skinner"
+    And I am on skinner's preferences page
+    And I select "public skin" from "preference_skin_id"
+    And I submit
+  When I am on skinner's preferences page
+    Then "public skin" should be selected within "preference_skin_id"
+  When I go to skinner's skins page
+    And I press "Revert to Default Skin"
+  When I am on skinner's preferences page
+    Then "Default" should be selected within "preference_skin_id"
+  When I am on skinner's skins page
+    Then I should see "Using Default Skin"
+  
+    
