@@ -318,7 +318,7 @@ Feature: creating and editing skins
       And I follow "Create Skin"
     Then "Site Skin" should be selected within "skin_type"
     When I am on the skins page
-      And I follow "Work Skins"
+      And I follow "My Work Skins"
       And I follow "Create Skin"
     Then "Work Skin" should be selected within "skin_type"
 

@@ -6,8 +6,8 @@
   <% if session[:site_skin] %>
     <li><%= link_to ts("Revert to Default Skin"), unset_skins_path %></li>
   <% end %>
-	<% if logged_in? %>
-	    <li>
+  <% if logged_in? %>
+      <li>
         <% if (current_user.preference.skin_id != Skin.default.id) && session[:site_skin].blank? %>
           <%= form_for(current_user.preference, :url => {:controller => :preferences, :action => :update, :user_id => current_user}, :method => "put") do |f| %>
             <%= f.hidden_field :skin_id, :value => Skin.default.id %>
@@ -18,9 +18,9 @@
         <% end %>
       </li>
 
-	
+
     <% unless controller.action_name == "new" %>
-      <li><%= link_to ts("Create Skin"), new_skin_path %></li>
+      <li><%= link_to ts('Create Skin'), new_skin_path(:skin_type => work_skin ? "WorkSkin" : "Skin") %></li>
     <% end %>
     
     <!-- wizard-to-custom-css switchers for new and edit -->
