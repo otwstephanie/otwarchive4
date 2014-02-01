@@ -180,9 +180,9 @@ class StoryParser
   def parse_story(story, location, options = {})
     work_params = parse_common(story, location, options[:encoding])
     filename = 'foo'
-    File.open("#{Rails.root}/param.txt", File::WRONLY|File::CREAT|File::EXCL) do |file|
-      file.write pp(work_params)
-    end
+    File.open("#{Rails.root}/param.txt", "a+"){|f| f.write(pp work_params) }
+
+
     # move any attributes from work to chapter if necessary
     return set_work_attributes(Work.new(work_params), location, options)
   end
