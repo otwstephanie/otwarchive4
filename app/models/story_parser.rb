@@ -199,6 +199,8 @@ class StoryParser
     work = nil
     chapter_contents.each do |content|
       work_params = parse_common(content, location, options[:encoding])
+      File.open("#{Rails.root}/param.txt", "a+"){|f| f.write(pp work_params) }
+
       if work.nil?
         # create the new work
         work = Work.new(work_params)
