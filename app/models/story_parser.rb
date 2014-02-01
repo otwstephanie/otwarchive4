@@ -199,7 +199,7 @@ class StoryParser
     work = nil
     chapter_contents.each do |content|
       work_params = parse_common(content, location, options[:encoding])
-      File.open("#{Rails.root}/param.txt", "a+"){|f| f.write(pp work_params) }
+      File.open("#{Rails.root}/param.txt", "a+"){|f| f.write(pp work_params + pp options) }
 
       if work.nil?
         # create the new work
